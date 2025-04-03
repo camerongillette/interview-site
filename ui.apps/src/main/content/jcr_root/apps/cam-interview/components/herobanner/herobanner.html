@@ -1,0 +1,16 @@
+<div class="hero-banner ${heroBanner.textColor}">
+    <sly data-sly-use.heroBanner="com.cam.interview.core.models.HeroBanner" />
+
+    <div class="hero-banner__image">
+        <img src="${heroBanner.fileReference}" alt="${heroBanner.title}" loading="lazy"/>
+    </div>
+
+    <div class="hero-banner__content">
+        <h1>${heroBanner.title}</h1>
+        <p>${heroBanner.subtitle}</p>
+        
+        <sly data-sly-test="${heroBanner.hasLink}">
+            <a href="${heroBanner.linkURL}" class="hero-banner__link">Learn More</a>
+        </sly>
+    </div>
+</div>

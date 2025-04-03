@@ -1,0 +1,7 @@
+{
+    "scripts": [
+        "create path (sling:OrderedFolder) /content/dam/cam-interview",
+        "create path (nt:unstructured) /content/dam/cam-interview/jcr:content",
+        "set properties on /content/dam/cam-interview/jcr:content\n  set cq:conf{String} to /conf/cam-interview\n  set jcr:title{String} to \"Cam Coding Assignment\"\nend"
+    ]
+}
