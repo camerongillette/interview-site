@@ -1,0 +1,37 @@
+.hero-banner {
+    position: relative;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-banner__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-banner__content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.hero-banner.light .hero-banner__content {
+    color: #000;
+}
+
+.hero-banner.dark .hero-banner__content {
+    color: #fff;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .hero-banner__content {
+        position: static;
+        transform: none;
+        text-align: center;
+        padding: 10px;
+    }
+}

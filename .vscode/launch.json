@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        
+            "type": "java",
+            "name": "AEM Author",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 8000,
+            "jdkHome": "C:/Program Files/Java/jdk-17"
+      }
+    ]
+  }
+  

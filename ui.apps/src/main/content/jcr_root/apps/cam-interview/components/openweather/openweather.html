@@ -1,0 +1,11 @@
+<sly data-sly-use.weatherModel="com.cam.interview.core.models.OpenWeather">
+    <div class="weather-component">
+        <h2>Conditions ${weatherModel.weatherData.conditions}</h2>
+        <h2>Temperature ${weatherModel.weatherData.temperature}</h2>
+        <h2>Humidity ${weatherModel.weatherData.humidity}</h2>
+
+        <sly data-sly-test="${weatherModel.location && !weatherModel.weatherData.conditions && !weatherModel.weatherData.temperature && !weatherModel.weatherData.humidity}">
+            <p class="author-only">Weather data is unavailable or missing. Please check the location.</p>
+        </sly>
+    </div>
+</sly>
