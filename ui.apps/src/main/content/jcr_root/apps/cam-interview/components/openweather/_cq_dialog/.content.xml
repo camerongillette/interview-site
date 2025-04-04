@@ -7,9 +7,17 @@
              sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <location jcr:primaryType="nt:unstructured"
-                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                      fieldLabel="Location"
-                      name="./location"/>
+                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                fieldLabel="Location"
+                name="./location"/>
+            <cacheTime
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/foundation/form/numberfield"
+                fieldLabel="Cache Time in Minutes"
+                defaultValue="15"
+                min="1"
+                step="1"
+                name="./cacheTime"/>
         </items>
     </content>
 </jcr:root>
