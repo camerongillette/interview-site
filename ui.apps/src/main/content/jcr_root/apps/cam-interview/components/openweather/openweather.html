@@ -4,8 +4,11 @@
         <h2>Temperature ${weatherModel.weatherData.temperature}</h2>
         <h2>Humidity ${weatherModel.weatherData.humidity}</h2>
 
-        <sly data-sly-test="${weatherModel.location && !weatherModel.weatherData.conditions && !weatherModel.weatherData.temperature && !weatherModel.weatherData.humidity}">
-            <p class="author-only">Weather data is unavailable or missing. Please check the location.</p>
+        <sly data-sly-test.invalid="${weatherModel.location && !weatherModel.weatherData.conditions && !weatherModel.weatherData.temperature && !weatherModel.weatherData.humidity}">
+            <p class="author-only">Weather data is unavailable or missing. Please check the location. '${weatherModel.location}'</p>
+        </sly>
+        <sly data-sly-test="${!weatherModel.location && !invalid}">
+            <p class="author-only">Enter a valid location</p>
         </sly>
     </div>
 </sly>

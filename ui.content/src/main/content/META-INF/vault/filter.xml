@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
     <filter root="/conf/cam-interview" mode="merge"/>
+    <filter root="/conf/global/settings/workflow/launcher/config/-1659490729" mode="merge"/>
+    <filter root="/var/workflow/models/addMetadataToImages.xml" mode="merge"/>
     <filter root="/content/cam-interview" mode="merge"/>
     <filter root="/content/dam/cam-interview" mode="merge">
         <exclude pattern="/content/dam/cam-interview(/.*)?"/>

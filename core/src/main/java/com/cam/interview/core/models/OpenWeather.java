@@ -1,15 +1,17 @@
 package com.cam.interview.core.models;
 
+import com.cam.interview.core.pojo.WeatherPOJO;
+import com.cam.interview.core.services.OpenWeatherService;
+
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.cam.interview.core.pojo.WeatherPOJO;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStreamReader;
@@ -22,27 +24,37 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OpenWeather {
 
     private static final Logger log = LoggerFactory.getLogger(OpenWeather.class);
-    private static final String WEATHER_API_KEY = "a41c90a3b8d1a4113328e36c7d0746a7";
     private static final String WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static final Map<String, CachedWeatherData> weatherCache = new ConcurrentHashMap<>();
 
     @ValueMapValue
     private String location;
+
     @ValueMapValue
-    @Default(intValues = 15) 
+    @Default(intValues = 15)
     private int cacheTime;
 
     private WeatherPOJO weatherData;
+    private String apiKey;
+
+    @OSGiService
+    private OpenWeatherService openWeatherService;
 
     @PostConstruct
     protected void init() {
-        weatherData = getWeatherDataFromCacheOrApi(location);
+        apiKey = openWeatherService.getApiKey();
+        if(apiKey==null || apiKey.equals("")){
+            log.error("MISSING OPEN WEATHER API KEY");
+        }
+        else if (location != null) {
+            weatherData = getWeatherDataFromCacheOrApi(location);
+        }
     }
 
     private WeatherPOJO getWeatherDataFromCacheOrApi(String cacheKey) {
         long currentTime = System.currentTimeMillis();
         CachedWeatherData cachedData = weatherCache.get(cacheKey);
-        long cacheDuration = cacheTime * 60 * 1000; //Calculate milliseconds
+        long cacheDuration = cacheTime * 60 * 1000; // Calculate milliseconds
         if (cachedData != null && (currentTime - cachedData.getTimestamp()) < cacheDuration) {
             log.debug("Retrieved weather data from cache for location: {}", location);
             return cachedData.getWeatherData();
@@ -58,7 +70,11 @@ public class OpenWeather {
 
     private WeatherPOJO fetchWeatherDataFromApi() {
         try {
-            String apiUrl = String.format("%s?q=%s&appid=%s&units=metric", WEATHER_API_URL, location, WEATHER_API_KEY);
+            if (apiKey == null || apiKey.isEmpty()) {
+                log.error("Weather API Key is not configured.");
+                return new WeatherPOJO(new JSONObject());
+            }
+            String apiUrl = String.format("%s?q=%s&appid=%s&units=metric", WEATHER_API_URL, location, apiKey);
             HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000);

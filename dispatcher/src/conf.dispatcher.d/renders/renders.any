@@ -1,0 +1,7 @@
+{
+/rend01
+  {
+  /hostname "localhost"
+  /port "4503"
+  }
+}

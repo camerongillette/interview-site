@@ -1,0 +1,19 @@
+{
+/0000 { /glob "*.html" /type "invalidate" }
+/0001 { /glob "*.css" /type "invalidate" }
+/0002 { /glob "*.js" /type "invalidate" }
+/0003 { /glob "*.jpg" /type "invalidate" }
+/0004 { /glob "*.jpeg" /type "invalidate" }
+/0005 { /glob "*.png" /type "invalidate" }
+/0006 { /glob "*.gif" /type "invalidate" }
+/0007 { /glob "*.svg" /type "invalidate" }
+/0008 { /glob "*" /type "deny" } # Deny other invalidations
+/allowedClients
+  {
+  /0000 { /glob "127.0.0.1" /type "allow" }
+  /0001 { /glob "::1" /type "allow" }
+  # Add IP addresses or ranges of your AEM publish instances
+  # /0002 { /glob "10.0.1.10" /type "allow" }
+  # /0003 { /glob "10.0.1.*" /type "allow" }
+  }
+}
