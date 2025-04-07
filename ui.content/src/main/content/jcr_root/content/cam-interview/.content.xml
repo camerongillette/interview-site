@@ -5,7 +5,7 @@
         cq:allowedTemplates="[/conf/cam-interview/settings/wcm/templates/(?!xf-).*]"
         cq:conf="/conf/cam-interview"
         cq:redirectTarget="/content/cam-interview/us/en"
-        cq:template="/conf/cam-interview/settings/wcm/templates/page-content"
+        cq:template="/conf/cam-interview/settings/wcm/templates/content-page"
         jcr:primaryType="cq:PageContent"
         jcr:title="Cam Coding Assignment"
         sling:configRef="/conf/cam-interview"

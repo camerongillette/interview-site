@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[mobile/groups/responsive]"
-        cq:template="/conf/cam-interview/settings/wcm/templates/page-content"
+        cq:template="/conf/cam-interview/settings/wcm/templates/content-page"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="cam-interview/components/page">
         <root
@@ -12,13 +12,15 @@
             layout="responsiveGrid">
             <experiencefragment-header
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="cam-interview/components/experiencefragment"
-                fragmentVariationPath="/content/experience-fragments/cam-interview/us/en/site/header/master"/>
+                sling:resourceType="cam-interview/components/experiencefragment"/>
             <container
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="cam-interview/components/container"
                 editable="{Boolean}true"
                 layout="responsiveGrid"/>
+            <experiencefragment-footer
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="cam-interview/components/experiencefragment"/>
         </root>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">

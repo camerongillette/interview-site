@@ -1,0 +1,135 @@
+# Each farm configures a set of load balanced renders (i.e. remote servers)
+/farms
+  {
+  /website
+    {
+    /clientheaders
+      {
+      "*"
+      "X-Forwarded-Proto"
+      "Host"
+      }
+
+    /virtualhosts
+      {
+      "*"
+      }
+
+    /renders
+      {
+      /rend01
+        {
+        /hostname "localhost"
+        /port "4503"
+        }
+      }
+
+    /filter
+      {
+      /0001 { /type "allow" /glob "*" } # Adjust for stricter security as needed
+      }
+
+    /cache
+      {
+      /docroot "/var/www/html"
+      /allowAuthorized "0" # Consider setting to "1" if authorized content needs caching
+      /rules
+        {
+        /0000 { /glob "*.html" /type "allow" }
+        /0001 { /glob "*.css" /type "allow" }
+        /0002 { /glob "*.js" /type "allow" }
+        /0003 { /glob "*.jpg" /type "allow" }
+        /0004 { /glob "*.jpeg" /type "allow" }
+        /0005 { /glob "*.png" /type "allow" }
+        /0006 { /glob "*.gif" /type "allow" }
+        /0007 { /glob "*.svg" /type "allow" }
+        /0008 { /glob "*" /type "deny" } # Deny caching for everything else
+        }
+
+      /headers
+        {
+        /0000 {
+          /glob "*.css"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0001 {
+          /glob "*.js"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0002 {
+          /glob "*.jpg"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0003 {
+          /glob "*.jpeg"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0004 {
+          /glob "*.png"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0005 {
+          /glob "*.gif"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0006 {
+          /glob "*.svg"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=31536000" # 1 year
+        }
+        /0007 {
+          /glob "*.html"
+          /type "add"
+          /name "Cache-Control"
+          /value "public, max-age=3600" # 1 hour - adjust as needed
+        }
+        }
+
+      /invalidate
+        {
+        /0000 { /glob "*.html" /type "invalidate" }
+        /0001 { /glob "*.css" /type "invalidate" }
+        /0002 { /glob "*.js" /type "invalidate" }
+        /0003 { /glob "*.jpg" /type "invalidate" }
+        /0004 { /glob "*.jpeg" /type "invalidate" }
+        /0005 { /glob "*.png" /type "invalidate" }
+        /0006 { /glob "*.gif" /type "invalidate" }
+        /0007 { /glob "*.svg" /type "invalidate" }
+        /0008 { /glob "*" /type "deny" } # Deny other invalidations
+        }
+
+      /allowedClients
+        {
+        /0000 { /glob "127.0.0.1" /type "allow" } # Allow invalidation requests from localhost (AEM)
+        }
+      }
+
+    /statistics
+      {
+      /categories
+        {
+        /html
+          {
+          /glob "*.html"
+          }
+        /others
+          {
+          /glob "*"
+          }
+        }
+      }
+    }
+  }
