@@ -1,6 +1,7 @@
+<sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"
+    data-sly-call="${clientLib.css @ categories='cam-interview.herobanner'}"
+    data-sly-use.heroBanner="com.cam.interview.core.models.HeroBanner"/>
 <div class="hero-banner ${heroBanner.textColor}">
-    <sly data-sly-use.heroBanner="com.cam.interview.core.models.HeroBanner" />
-
     <div class="hero-banner__image">
         <img src="${heroBanner.fileReference}" alt="${heroBanner.title}" loading="lazy"/>
     </div>

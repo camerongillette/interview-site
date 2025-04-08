@@ -19,11 +19,15 @@
 }
 
 .hero-banner.light .hero-banner__content {
-    color: #000;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 40px;
 }
 
 .hero-banner.dark .hero-banner__content {
-    color: #fff;
+    color: #000;
+    background-color: rgba(255, 255, 255, .5);
+    padding: 40px;
 }
 
 /* Mobile Styles */

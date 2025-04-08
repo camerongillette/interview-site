@@ -60,7 +60,34 @@ public class OpenWeather {
             return cachedData.getWeatherData();
         } else {
             log.debug("Fetching fresh weather data for location: {}", location);
-            WeatherPOJO fetchedData = fetchWeatherDataFromApi();
+            //WeatherPOJO fetchedData = fetchWeatherDataFromApi();
+            WeatherPOJO fetchedData;
+            try {
+                if (apiKey == null || apiKey.isEmpty()) {
+                    log.error("Weather API Key is not configured.");
+                    fetchedData = new WeatherPOJO(new JSONObject());
+                }
+                String apiUrl = String.format("%s?q=%s&appid=%s&units=metric", WEATHER_API_URL, location, apiKey);
+                HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
+    
+                InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+                StringBuilder response = new StringBuilder();
+                int data;
+                while ((data = reader.read()) != -1) {
+                    response.append((char) data);
+                }
+    
+                return new WeatherPOJO(new JSONObject(response.toString()));
+    
+            } catch (Exception e) {
+                log.error("Error fetching weather data from API", e);
+                fetchedData = new WeatherPOJO(new JSONObject()); // Return empty data in case of failure
+            }
+
+
             if (fetchedData != null) {
                 weatherCache.put(cacheKey, new CachedWeatherData(fetchedData, currentTime));
             }
@@ -68,40 +95,6 @@ public class OpenWeather {
         }
     }
 
-    private WeatherPOJO fetchWeatherDataFromApi() {
-        try {
-            if (apiKey == null || apiKey.isEmpty()) {
-                log.error("Weather API Key is not configured.");
-                return new WeatherPOJO(new JSONObject());
-            }
-            String apiUrl = String.format("%s?q=%s&appid=%s&units=metric", WEATHER_API_URL, location, apiKey);
-            HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-
-            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-            StringBuilder response = new StringBuilder();
-            int data;
-            while ((data = reader.read()) != -1) {
-                response.append((char) data);
-            }
-
-            return new WeatherPOJO(new JSONObject(response.toString()));
-
-        } catch (Exception e) {
-            log.error("Error fetching weather data from API", e);
-            return new WeatherPOJO(new JSONObject()); // Return empty data in case of failure
-        }
-    }
-
-    public WeatherPOJO getWeatherData() {
-        return weatherData != null ? weatherData : new WeatherPOJO(new JSONObject());
-    }
-
-    public String getLocation() {
-        return location;
-    }
 
     private static class CachedWeatherData {
         private final WeatherPOJO weatherData;
@@ -119,5 +112,13 @@ public class OpenWeather {
         public long getTimestamp() {
             return timestamp;
         }
+    }
+
+    public WeatherPOJO getWeatherData() {
+        return weatherData != null ? weatherData : new WeatherPOJO(new JSONObject());
+    }
+
+    public String getLocation() {
+        return location;
     }
 }
