@@ -1,3 +1,0 @@
-{
-/0001 { /type "allow" /glob "*" } # Adjust for stricter security as needed
-}

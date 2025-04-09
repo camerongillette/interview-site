@@ -26,13 +26,14 @@
 
     /filter
       {
-      /0001 { /type "allow" /glob "*" } # Adjust for stricter security as needed
+      /0001 { /type "allow" /glob "*" } 
       }
+      #Block all admin/AEM things here. Leaving open for demo purposes
 
     /cache
       {
       /docroot "/var/www/html"
-      /allowAuthorized "0" # Consider setting to "1" if authorized content needs caching
+      /allowAuthorized "0" 
       /rules
         {
         /0000 { /glob "*.html" /type "allow" }
@@ -108,7 +109,7 @@
         /0005 { /glob "*.png" /type "invalidate" }
         /0006 { /glob "*.gif" /type "invalidate" }
         /0007 { /glob "*.svg" /type "invalidate" }
-        /0008 { /glob "*" /type "deny" } # Deny other invalidations
+        /0008 { /glob "*" /type "deny" } 
         }
 
       /allowedClients
