@@ -49,6 +49,8 @@
 
       /headers
         {
+        #Not including strict transport policy as we're on a local http server
+
         /0000 {
           /glob "*.css"
           /type "add"
@@ -117,20 +119,4 @@
         /0000 { /glob "127.0.0.1" /type "allow" } # Allow invalidation requests from localhost (AEM)
         }
       }
-
-    /statistics
-      {
-      /categories
-        {
-        /html
-          {
-          /glob "*.html"
-          }
-        /others
-          {
-          /glob "*"
-          }
-        }
-      }
-    }
   }
